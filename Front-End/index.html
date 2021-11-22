@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games</title>
+</head>
+<body>
+    <!--Exibir lista de jogos-->
+    <h4>Lista de jogos</h4>
+    <hr>
+    <ul id="games"></ul>
+    <hr>
+
+    <!--Cadastrar um novo jogo-->
+    <h4>Cadastre um novo jogo</h4>
+    <input type="text" name="title" id="title" placeholder="Nome Do Jogo">
+    <br>
+    <input type="number" name="year" id="year" placeholder="Ano Do Jogo">
+    <br>
+    <input type="number" name="price" id="price" placeholder="Preço Do Jogo">
+    <br>
+    <button type="button" onclick="createGame()">Criar</button>
+    <hr>
+
+    <!--Editar um game-->
+    <h4>Edite um jogo</h4>
+    <input type="hidden" name="idEdit" id="idEdit" placeholder="Nome Do Jogo">
+    <input type="text" name="titleEdit" id="titleEdit" placeholder="Nome Do Jogo">
+    <br>
+    <input type="number" name="yearEdit" id="yearEdit" placeholder="Ano Do Jogo">
+    <br>
+    <input type="number" name="priceEdit" id="priceEdit" placeholder="Preço Do Jogo">
+    <br>
+    <button type="button" onclick="updateSend()">Editar</button>
+
+    <!--Scripts-->
+    <!--Axios-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!--Script Local-->
+    <script src="./index.js"></script>
+</body>
+</html>
