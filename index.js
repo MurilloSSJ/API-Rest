@@ -3,10 +3,14 @@ const app = express()
 const bodyParser = require('body-parser')
 const {games,DB,users} = require('./db')
 const cors = require('cors')
+const jwt = require('jsonwebtoken')
+
+
+const JWTSecret = "asjidhsjfnasjd124154@jhusjchf"
+
 /*CONFIGURAÇÃO DO BODY PARSER*/
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
-
 //Configuração do cors
 app.use(cors())
 
@@ -122,6 +126,35 @@ app.put('/games/:id',(req,res)=>{
                 res.sendStatus(200)
             }
         })
+    }
+})
+app.post('/auth',(req,res)=>{
+    const {email,senha} = req.body
+    if (email!=undefined){
+        users.findAll({where:{
+            email:email
+        }}).then(user=>{
+            if(user==undefined){
+                res.sendStatus(404)
+            }else{
+                if(user[0].password == senha){
+                    jwt.sign({email:user[0].email,id:user[0].id},JWTSecret,{expiresIn:'12h'},(err,token)=>{
+                        if(err){
+                            res.sendStatus(400)
+                        }else{
+                            res.status(200)
+                            res.json({token:token})
+                        }
+                    })
+
+                }else{
+                    res.sendStatus(401)
+                }
+                
+            }
+        }).catch(err=>console.log(err))
+    }else{
+        res.sendStatus(400)
     }
 })
 
