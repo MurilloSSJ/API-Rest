@@ -1,4 +1,10 @@
-axios.get("http://localhost:3000/games").then(response=>{
+var axiosConfig = {
+    headers:{
+        Authorization: "Bearer " + localStorage.getItem('token')
+    }
+}
+
+axios.get("http://localhost:3000/games",axiosConfig).then(response=>{
     const games = response.data
     const lista = document.querySelector('#games')
 
@@ -26,6 +32,23 @@ axios.get("http://localhost:3000/games").then(response=>{
         lista.appendChild(item)
     })
 })
+
+function login(){
+    const emailField = document.getElementById('email')
+    const passwordField = document.getElementById("password")
+    const mail = emailField.value
+    const password = passwordField.value
+    axios.post('http://localhost:3000/auth',{
+        email: mail,
+        senha:password
+    }).then(res=>{
+        const token = res.data.token
+        localStorage.setItem("token",token)
+        axiosConfig.headers.Authorization = "Bearer " + localStorage.getItem("token")
+    }).catch(err =>{
+        alert("login invalido")
+    })
+}
 function updateGame(listItem){
     const id = listItem.getAttribute("data-id")
     const price = listItem.getAttribute("data-price")

@@ -3,7 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const {games,DB,users} = require('./db')
 const cors = require('cors')
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken")
 
 
 const JWTSecret = "asjidhsjfnasjd124154@jhusjchf"
@@ -17,13 +17,36 @@ app.use(cors())
 /*Sicronizando com o DB*/
 DB.sync()
 
+//Midlleware
+function auth(req,res,next){
+    const authToken = req.headers['authorization']
+    if(authToken!=undefined){
+        const bearer = authToken.split(' ')
+        var token = bearer[1]
+
+        jwt.verify(token,JWTSecret,(err,data)=>{
+            if(err){
+                res.status(401)
+                res.json({err:"Token Invalido"})
+            }else{
+                req.token = token
+                req.loggedUser = {id: data.id, email:data.email}
+                next()
+            }
+        })
+    }else{
+        res.status(401)
+        res.json({err:"Token Invalido"})
+    }
+}
+
 /*ROTAS */
 //Pegar todos os games cadastrados 
-app.get('/games',(req,res)=>{
+app.get('/games',auth,(req,res)=>{
     games.findAll().then(artigos=>{
         res.json(artigos)
     })
-    res.statusCode = 200
+    res.status(200)
 })
 
 //Pegar apenas um game pela ID
