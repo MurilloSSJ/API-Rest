@@ -10,10 +10,41 @@ Nenhum
 #### Respostas
 ##### OK 200
 Caso tudo ocorra como o esperado, você receberá o status 200 e a lista com todos os games
-![image](https://user-images.githubusercontent.com/77257498/147416286-9e7d2c50-a72b-4d33-9222-c077020fe4b1.png)
+```
+[
+    {
+        "id": 3,
+        "title": "The Elder Scroll V: Skyrim",
+        "year": 2011,
+        "price": 39.99,
+        "createdAt": "2021-11-21T21:35:07.000Z",
+        "updatedAt": "2021-11-21T21:35:07.000Z"
+    },
+    {
+        "id": 55,
+        "title": "Resident Evil 5",
+        "year": 2007,
+        "price": 9.99,
+        "createdAt": "2021-11-21T21:35:07.000Z",
+        "updatedAt": "2021-11-21T23:30:23.000Z"
+    },
+    {
+        "id": 102,
+        "title": "CS-GO",
+        "year": 2010,
+        "price": 0,
+        "createdAt": "2021-11-21T22:01:11.000Z",
+        "updatedAt": "2021-11-21T22:09:34.000Z"
+    }
+]
+```
 ##### UNAUTHORIZED 401
 Caso você não esteja logado, ou esteja com e-mail ou login inválidos, você receberá esse status, com uma mensagem de erro.
-![image](https://user-images.githubusercontent.com/77257498/147416297-9060bb55-a76c-490a-b808-65526c8aa02b.png)
+```
+{
+    "err": "Token Invalido"
+}
+```
 
 ### GET /games/:id
 Este endpoint é responsável por retornar um game específico do banco de dados.
@@ -22,13 +53,25 @@ Este endpoint é responsável por retornar um game específico do banco de dados
 #### Respostas
 ##### OK 200
 Caso tudo ocorra como o esperado, você receberá o status 200, e uma lista com o game selecionado.
-![image](https://user-images.githubusercontent.com/77257498/147416375-2475ad31-ce84-490d-b237-53a53c05d4d0.png)
+```
+[
+    {
+        "id": 3,
+        "title": "The Elder Scroll V: Skyrim",
+        "year": 2011,
+        "price": 39.99,
+        "createdAt": "2021-11-21T21:35:07.000Z",
+        "updatedAt": "2021-11-21T21:35:07.000Z"
+    }
+]
+```
 ##### BAD REQUEST 400
 Se nenhum valor de id for passado como parametro, você receberá o status 400, com uma mensagem de erro.
-![image](https://user-images.githubusercontent.com/77257498/147416461-b0bc7e8f-238f-4c4f-97d6-92a97e3d3afd.png)
-##### UNAUTHORIZED 401
-Caso você não esteja logado, ou esteja com e-mail ou login inválidos, você receberá esse status, com uma mensagem de erro.
-![image](https://user-images.githubusercontent.com/77257498/147416297-9060bb55-a76c-490a-b808-65526c8aa02b.png)
+```
+{
+    "err": "Nenhum valor de ID passado como parametro"
+}
+```
 
 ### POST /games
 Endpoint para salvar um game no banco de dados.
@@ -75,7 +118,11 @@ Rota para autenticação do usuário
 #### Respostas
 ##### OK 200
 Se tudo ocorrer corretamente, o usuário recebera este status e o seu token jwt
-![image](https://user-images.githubusercontent.com/77257498/147416696-2d40bf87-57e9-4a20-a92b-650d1f9f6a4d.png)
+```
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im11cmlsbG9zdG9yZUBnbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNjQwNTQxMzA1LCJleHAiOjE2NDA1ODQ1MDV9.EegunvlaVkcyejO22j70Fzpqt_HiO1V18KmA6BNDptI"
+}
+```
 ##### NOT FOUND 404
 Caso o usuário não exista no banco de dados, será retornado o status 404.
 ##### BAD REQUEST 400
