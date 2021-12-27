@@ -53,7 +53,8 @@ app.get('/games',auth,(req,res)=>{
 app.get('/games/:id',(req,res)=>{
     var id = req.params.id
     if(isNaN(id)){
-        res.sendStatus(400)
+        res.status(400)
+        res.json({err:"Nenhum valor de ID passado como parametro"})
     }else{
         id = parseInt(id)
         games.findAll({where:{
@@ -123,7 +124,6 @@ app.put('/games/:id',(req,res)=>{
             id:id
         }}).then(game=>{
             if(game== undefined){
-                console.log("entrou")
                 res.sendStatus(404)
             }else{
                 const {title,price,year}= req.body
