@@ -43,8 +43,20 @@ function auth(req,res,next){
 /*ROTAS */
 //Pegar todos os games cadastrados 
 app.get('/games',auth,(req,res)=>{
+    var HATEOAS = [
+        {
+            href:"http://localhost:3000/games/:id",
+            method: "GET",
+            rel:"get_game_by_id"
+        },{
+            href:"http://localhost:3000/auth",
+            method: "POST",
+            rel:"login"
+        }
+    ]
+
     games.findAll().then(artigos=>{
-        res.json(artigos)
+        res.json({games:artigos,_links:HATEOAS})
     })
     res.status(200)
 })
